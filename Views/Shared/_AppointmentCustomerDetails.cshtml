@@ -1,0 +1,41 @@
+﻿@*Урок 12*@
+@model CoreStoreMVC.Models.Appointment
+
+<h4 class="text-success">Appointment Details</h4>
+
+<div class="container border" style="background-color: aliceblue">
+    <div class="col-12 pt-3">
+        <div class="row">
+            <div class="col-sm-2">
+                Full Name:
+            </div>
+            <div class="col-sm-3">
+                <input asp-for="@Model.CustomerName" readonly class="form-control" />
+            </div>
+
+            <div class="col-sm-2 offset-2">
+                Email:
+            </div>
+            <div class="col-sm-3">
+                <input asp-for="@Model.CustomerEmail" readonly class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mt-1 pb-3">
+        <div class="row">
+            <div class="col-sm-2">
+                Phone Number::
+            </div>
+            <div class="col-sm-3">
+                <input asp-for="@Model.CustomerPhoneNumber" readonly class="form-control" />
+            </div>
+
+            <div class="col-sm-2 offset-2">
+                Appointment Date:
+            </div>
+            <div class="col-sm-3">
+                <input readonly class="form-control" value="@Model.AppointmentDay.ToString("dd.MM.yyyy HH:mm")" />
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,122 @@
+﻿@*Домашнее задание 8*@
+@using Microsoft.AspNetCore.Http
+@using CoreStoreMVC.Extensions
+@inject IHttpContextAccessor HttpContextAccessor
+
+@*ДОМАШНЕЕ ЗАДАНИЕ 7*@
+@model CoreStoreMVC.Models.Product
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h2 class="mt-1 text-info">Product Details</h2>
+
+<form method="post">
+
+    @*Урок 9*@
+    @*Добавляем в форму скрытое поле для передачи ID*@
+    <input hidden asp-for="Id" />
+
+    <div class="p-4 border rounded row">
+
+        @*Обромляем в див в 8 колонок*@
+        <div class="col-8">
+            <div class="row form-group">
+                <div class="col-4">
+                    <label asp-for="Name"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Name" class="form-control" readonly />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-4">
+                    <label asp-for="ShadeColor"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="ShadeColor" class="form-control" readonly />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-4">
+                    <label asp-for="Price"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Price" class="form-control" readonly />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-4">
+                    <label asp-for="ProductTypes"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="ProductTypes.Name" class="form-control" readonly />
+                </div>
+            </div>
+
+            @if (!Model.SpecialTags.Name.Equals("--NONE--"))
+            {
+                <div class="row form-group">
+                    <div class="col-4">
+                        <label asp-for="SpecialTags"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="SpecialTags.Name" class="form-control" readonly />
+                    </div>
+                </div>
+            }
+
+            <div class="row form-group">
+                <div class="col-4">
+
+                </div>
+                <div class="col-8">
+
+                    @*Домашнее задание 8*@
+                    @{
+                        bool isInCart = false;
+                        List<int> listOfCart = HttpContextAccessor.HttpContext.Session.Get<List<int>>("sShoppingCart");
+
+                        if (listOfCart != null && listOfCart.Contains(Model.Id))
+                        {
+                            isInCart = true;
+                        }
+                    }
+
+                    @if (isInCart)
+                    {
+                        <button type="submit" asp-route-id="@Model.Id" asp-action="Remove" class="btn btn-danger form-control">Remove From Cart</button>
+                    }
+                    else
+                    {
+                        <button type="submit" asp-route-id="@Model.Id" class="btn btn-primary form-control">Add To Cart</button>
+                    }
+
+                </div>
+            </div>
+
+        </div>
+
+        @*Создаём новые колонки*@
+        <div class="col-1">
+
+        </div>
+        <div class="col-3">
+            <img src="@Model.Image" width="100%" style="border-radius: 5px; border: 1px solid #bbb9b9;" />
+
+            @if (Model.Available)
+            {
+                <img src="~/Images/instock.png" class="img-fluid" />
+            }
+        </div>
+
+        <br />
+        <div class="form-group">
+            <a asp-action="Index" class="btn btn-success">Back to List</a>
+        </div>
+    </div>
+</form>

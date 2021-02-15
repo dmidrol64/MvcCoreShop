@@ -1,0 +1,49 @@
+﻿@*STEP 1 Добавляем модель (Делаем строго типизированное представление)*@
+@model IEnumerable<CoreStoreMVC.Models.ProductsType>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@*STEP 4 After POST method adding*@
+@if (TempData["SM"] != null)
+{
+    <div class="row text-center">
+        <div class="col-12 alert alert-success">
+            @TempData["SM"]
+        </div>
+    </div>
+}
+
+@*STEP 2*@
+<div class="row mt-2">
+    <div class="col-6">
+        <h2 class="text-info">Product Type List</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Create" class="btn btn-info"><i class="fas fa-plus-square"></i>&nbsp; New Product Type</a>
+    </div>
+</div>
+
+@*STEP 3*@
+<div class="mt-1">
+    <table class="table table-striped border">
+        <thead>
+            <tr class="table-info">
+                <th>@Html.DisplayNameFor(x => x.Name)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(x => item.Name)</td>
+                    @*Урок 3*@
+                    <partial name="_TableButtonPartial" model="item.Id" />
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

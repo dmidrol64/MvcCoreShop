@@ -1,0 +1,32 @@
+﻿@model CoreStoreMVC.Models.SpecialTag
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2 class="mt-1 text-info">Edit Special Tag</h2>
+
+<form method="post" asp-action="Edit">
+    <div class="p-4 border rounded">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="row form-group">
+            <div class="col-2">
+                <label asp-for="Name"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Name" class="form-control" />
+            </div>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" asp-route-Id="@Model.Id" value="Edit" />
+            <a asp-action="Index" class="btn btn-success">Back to List</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

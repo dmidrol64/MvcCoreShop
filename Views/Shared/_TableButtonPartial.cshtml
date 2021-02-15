@@ -1,0 +1,18 @@
+﻿@*Шаг 1: Назначаем модель*@
+@model int
+@using System.Web
+
+@*Шаг 2: Создаём разметку для кнопок*@
+<td style="width: 150px">
+    <div class="btn-group" role="group">
+        <a class="btn btn-primary" href="@HttpUtility.UrlDecode(Url.Action($"Edit/{Model}"))">
+            <i class="fas fa-edit"></i>
+        </a>
+        <a class="btn btn-success" href="@HttpUtility.UrlDecode(Url.Action($"Details/{Model}"))">
+            <i class="fas fa-list-alt"></i>
+        </a>
+        <a class="btn btn-danger" href="@HttpUtility.UrlDecode(Url.Action($"Delete/{Model}"))">
+            <i class="fas fa-trash-alt"></i>
+        </a>
+    </div>
+</td>

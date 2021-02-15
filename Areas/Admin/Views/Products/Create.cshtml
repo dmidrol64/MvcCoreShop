@@ -1,0 +1,102 @@
+﻿@*ДОМАШНЕЕ ЗАДАНИЕ 4*@
+
+@model CoreStoreMVC.Models.ViewModel.ProductsViewModel
+@*Урок 6*@
+@using CoreStoreMVC.Extensions
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2 class="mt-1 text-info">Create Product</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="p-4 border rounded">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row form-group">
+            <div class="col-2">
+                <label asp-for="Products.Name"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Products.Name" class="form-control" />
+            </div>
+            <span asp-validation-for="Products.Name" class="text-danger"></span>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-2">
+                <label asp-for="Products.Price"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Products.Price" class="form-control" />
+            </div>
+            <span asp-validation-for="Products.Price" class="text-danger"></span>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-2">
+                <label asp-for="Products.Image"></label>
+            </div>
+            <div class="col-5">
+                <input type="file" name="files" class="form-control" />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-2">
+                <label asp-for="ProductTypes"></label>
+            </div>
+            <div class="col-5">
+                @*Урок 6*@
+                <select class="form-control" asp-for="Products.ProductTypeId" asp-items='Model.ProductTypes.ToSelectListItem(Model.Products.ProductTypeId)'>
+                    <option value="">Select a Product Type</option>
+                </select>
+            </div>
+            <span asp-validation-for="Products.ProductTypeId" class="text-danger"></span>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-2">
+                <label asp-for="SpecialTags"></label>
+            </div>
+            <div class="col-5">
+                @*Урок 6*@
+                <select class="form-control" asp-for="Products.SpecialTagId" asp-items='Model.SpecialTags.ToSelectListItem(Model.Products.SpecialTagId)'>
+                    <option value="">Select a Special Tag</option>
+                </select>
+            </div>
+            <span asp-validation-for="Products.SpecialTagId" class="text-danger"></span>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-2">
+                <label asp-for="Products.ShadeColor"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Products.ShadeColor" class="form-control" />
+            </div>
+            <span asp-validation-for="Products.ShadeColor" class="text-danger"></span>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-2">
+                <label asp-for="Products.Available"></label>
+            </div>
+            <div class="col-5">
+                <input type="checkbox" asp-for="Products.Available" class="form-control" style="width: 10px" />
+            </div>
+            <span asp-validation-for="Products.Available" class="text-danger"></span>
+        </div>
+
+        <br />
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Create" />
+            <a asp-action="Index" class="btn btn-success">Back to List</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
