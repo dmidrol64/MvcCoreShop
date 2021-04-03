@@ -4,10 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using CoreStoreMVC.Data;
 using CoreStoreMVC.Models;
+using CoreStoreMVC.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreStoreMVC.Areas.Admin.Controllers
 {
+    [Authorize(Roles = SD.SuperAdminEndUser)]
     [Area(nameof(Admin))]
     public class SpecialTagsController : Controller
     {
@@ -22,9 +25,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
         // GET метод представления Index
         public IActionResult Index()
         {
-            // Задача - получить и вернуть в представление все типы продуктов в листе
-
-            // Решение задачи
+            
             return View(_db.SpecialTags.ToList());
         }
 
@@ -60,7 +61,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
             return View(specialTag);
         }
 
-        // Домашнее задание 1
+        
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -74,7 +75,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
             return View(specialTag);
         }
 
-        // Домашнее задание 1
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, SpecialTag specialTag)
@@ -93,7 +94,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Урок 3
+        
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
@@ -107,7 +108,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
             return View(specialTag);
         }
 
-        // Урок 3
+        
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -121,7 +122,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
 
             return View(specialTag);
         }
-        // Урок 3
+        
         // Указываем официальное имя метода через аннотацию
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

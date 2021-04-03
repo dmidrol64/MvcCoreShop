@@ -130,8 +130,9 @@ namespace CoreStoreMVC.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        //await _signInManager.SignInAsync(user, isPersistent: false);
+                        //return LocalRedirect(returnUrl);
+                        return RedirectToAction("Index", "AdminUsers", new { area = "Admin" });
                     }
                 }
                 foreach (var error in result.Errors)

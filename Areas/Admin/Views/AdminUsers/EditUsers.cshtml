@@ -1,0 +1,49 @@
+﻿@model CoreStoreMVC.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Edit Users";
+}
+
+<h1>Edit Users</h1>
+<form method="post" asp-action="EditUsers">
+
+    <div class="p-4 border rounded">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="row form-group">
+            <div class="col-4">
+                <label asp-for="Name"></label>
+            </div>
+            <div class="col-8">
+                <input asp-for="Name" class="form-control" />
+            </div>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="row form-group">
+            <div class="col-4">
+                <label asp-for="Email"></label>
+            </div>
+            <div class="col-8">
+                <input asp-for="Email" class="form-control" readonly />
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-4">
+                <label asp-for="PhoneNumber"></label>
+            </div>
+            <div class="col-8">
+                <input asp-for="PhoneNumber" class="form-control" />
+            </div>
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" asp-route-id="@Model.Id" value="Edit" />
+            <a asp-action="Index" class="btn btn-success">Back to List</a>
+        </div>
+
+    </div>
+</form>
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+

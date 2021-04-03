@@ -56,16 +56,16 @@
                         <td>
                             @if (item.LockoutEnd is null || item.LockoutEnd < DateTime.Now)
                             {
+                                <div class="btn-group" role="group">
+                                    <a class="btn btn-primary" href="@HttpUtility.UrlDecode(Url.Action($"EditUsers/{item.Id}"))">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
 
-                                <a class="btn btn-primary" href="@HttpUtility.UrlDecode(Url.Action($"Edit/{Model}"))">
-                                    <i class="fas fa-edit"></i>
-                                </a>
+                                    <a class="btn btn-danger" href="@HttpUtility.UrlDecode(Url.Action($"Delete/{item.Id}"))">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
                             }
-
-                            <a class="btn btn-danger" href="@HttpUtility.UrlDecode(Url.Action($"Delete/{Model}"))">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-
                         </td>
                     </tr>
                 }

@@ -1,9 +1,10 @@
-﻿@*Урок 9*@
+﻿
 @using Microsoft.AspNetCore.Http
 @using CoreStoreMVC.Extensions
 @using CoreStoreMVC.Utility
 
 @inject IHttpContextAccessor HttpContextAccessor
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,22 +30,23 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @*Урок 2*@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="ProductTypes" asp-action="Index">Product Types</a>
-                        </li>
+                        @if (User.IsInRole(SD.SuperAdminEndUser)) { 
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="ProductTypes" asp-action="Index">Product Types</a>
+                            </li>
 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Admin" asp-controller="SpecialTags" asp-action="Index">Special Tags</a>
                         </li>
-                        @*Урок 4*@
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Admin" asp-controller="Products" asp-action="Index">Products</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Admin" asp-controller="AdminUsers" asp-action="Index">Admin users</a>
                         </li>
-                        @*Урок 9*@
+                        }
+                        @if (User.IsInRole(SD.AdminEndUser)) { 
                         @if (HttpContextAccessor.HttpContext.Session.Get<List<int>>("sShoppingCart") != null)
                         {
                             <li>
@@ -67,7 +69,7 @@
                                 </a>
                             </li>
                         }
-
+                     }
                     </ul>
                 </div>
             </div>

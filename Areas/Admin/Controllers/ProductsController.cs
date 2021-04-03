@@ -2,6 +2,7 @@
 using CoreStoreMVC.Models;
 using CoreStoreMVC.Models.ViewModel;
 using CoreStoreMVC.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,18 +13,19 @@ using System.Threading.Tasks;
 // Урок 4
 namespace CoreStoreMVC.Areas.Admin.Controllers
 {
+    [Authorize(Roles = SD.SuperAdminEndUser)]
     [Area(nameof(Admin))]
     public class ProductsController : Controller
     {
-        // Урок 4
+        
         // 1. Внедряем зависимость базы данных
         private readonly ApplicationDbContext _db;
 
-        // Урок 5
+        
         // V. Добавляем переменную для получения пути к корню сайта
         private readonly IWebHostEnvironment _hostingEnvironment;
 
-        // Урок 4
+        
         // 2. Добавляем свойство с атрибутом для всего контроллера
         [BindProperty]
         public ProductsViewModel ProductsVM { get; set; }
@@ -33,7 +35,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
             _db = db;
             _hostingEnvironment = hostingEnvironment;
 
-            // Урок 4
+            
             // 3. Инициализируем в конструкторе свойство значениями
             ProductsVM = new ProductsViewModel()
             {
@@ -43,7 +45,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
             };
         }
 
-        // Урок 4
+       
         // 4. Реализовать метод
         public async Task<IActionResult> Index()
         {
@@ -52,7 +54,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
             return View(await products.ToListAsync());
         }
 
-        // Урок 5
+        
         // 1. Добавляем метод Create
         // GET: Products/Create
         [HttpGet]
@@ -61,7 +63,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
             return View(ProductsVM);
         }
 
-        // Урок 5
+       
         // 2. Добавляем POST метод Create
         // POST: Products/Create
         [HttpPost, ActionName("Create")]
@@ -130,7 +132,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Урок 6
+        
         // GET: Products/Edit
         public async Task<IActionResult> Edit(int? id)
         {
@@ -156,7 +158,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
             return View(ProductsVM);
         }
 
-        // Урок 6 ДОМАШНЕЕ ЗАДАНИЕ
+        
         // POST: Products/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -223,7 +225,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Урок 7
+        
         // GET: Products/Details
         public async Task<IActionResult> Details(int? id)
         {
@@ -245,7 +247,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
             return View(ProductsVM);
         }
 
-        // Урок 7
+       
         // GET: Products/Delete
         public async Task<IActionResult> Delete(int? id)
         {
@@ -267,7 +269,7 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
             return View(ProductsVM);
         }
 
-        // Урок 7 ДОМАШНЕЕ ЗАДАНИЕ
+        
         // POST: Products/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

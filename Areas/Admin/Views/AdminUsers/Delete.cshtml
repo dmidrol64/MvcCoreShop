@@ -1,0 +1,51 @@
+﻿@model CoreStoreMVC.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Delete</h1>
+
+<form method="post">
+    @*В последнюю очередь добавить аргумент row для выравнивания изображения по правой стороне*@
+    <div class="p-4 border rounded row">
+
+        @*Добавить передачу ID из формы*@
+       
+        <div class="col-8">
+            <div class="row form-group">
+                <div class="col-4">
+                    <label asp-for="Name"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Name" readonly class="form-control" />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-4">
+                    <label asp-for="Email"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Email" readonly class="form-control" />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-4">
+                    <label asp-for="PhoneNumber"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="PhoneNumber" readonly class="form-control" />
+                </div>
+            </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-danger" value="Delete" asp-route-id="@Model.Id"/>
+            <a asp-action="Index" class="btn btn-success">Back to List</a>
+        </div>
+
+       </div>
+
+    </div>
+</form>

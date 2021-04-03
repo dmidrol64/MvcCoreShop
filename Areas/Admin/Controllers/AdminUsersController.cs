@@ -1,5 +1,7 @@
 ﻿using CoreStoreMVC.Data;
 using CoreStoreMVC.Models;
+using CoreStoreMVC.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace CoreStoreMVC.Areas.Admin.Controllers
 {
+   [Authorize(Roles = SD.SuperAdminEndUser)]
    [Area("Admin")]
     public class AdminUsersController : Controller
     {
@@ -27,36 +30,70 @@ namespace CoreStoreMVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> EditUsers(string id)
         {
-            
-            if (id.Length > 0)
-                id = id.Trim();
+            //if (id != null && id.Length > 0)
+            //    id = id.Trim();
+
+            if (id is null || id.Trim().Length is 0)
+                return NotFound();
 
 
             var users = await _db.ApplicationUsers.FindAsync(id);
 
-            
-            if (users.Id == null)
+
+            if (users == null)
                 return NotFound();
 
             return View(users);
         }
 
         [HttpPost]
-        public async Task<IActionResult>EditUser(string id, ApplicationUser applicationUser)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult>EditUsers(string id, ApplicationUser applicationUser)
         {
-            
-
-
-            if(id.Length > 0)
-                id = id.Trim();
-
             if (applicationUser.Id != id)
                 return NotFound();
 
-            _db.Update(applicationUser);
+            if (!ModelState.IsValid)
+                return View(applicationUser);
+
+            var user = await _db.ApplicationUsers.FindAsync(id);
+            if (user is null)
+                return NotFound();
+
+            user.Name = applicationUser.Name;
+            user.PhoneNumber = applicationUser.PhoneNumber;
+            
             await _db.SaveChangesAsync();
 
-            TempData["SM"] = $"Application uer{applicationUser.Name} editing successful.";
+            TempData["SM"] = $"Application user{applicationUser.Name} editing successful.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id is null || id.Trim().Length is 0)
+                return NotFound();
+            var user = await _db.ApplicationUsers.FindAsync(id);
+
+            if (user is null)
+                return NotFound();
+
+            return View(user);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeletePost(string id)
+        {
+            var user = await _db.ApplicationUsers.FindAsync(id);
+
+            user.LockoutEnd = DateTime.Now.AddYears(1000);
+
+            await _db.SaveChangesAsync();
+
+
             return RedirectToAction(nameof(Index));
         }
     }
